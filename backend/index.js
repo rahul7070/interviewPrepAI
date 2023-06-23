@@ -3,11 +3,12 @@ const {connection} = require("./db");
 const cors = require("cors")
 const { userRouter } = require("./routes/user.route");
 const cookieParser = require("cookie-parser");
-const { questionRouter } = require("./routes/question.route");
+// const { questionRouter } = require("./routes/question.route");
 require("dotenv").config();
 require('isomorphic-fetch');
 
 const app = express();
+app.use(cors());
 
 app.get("/", (req, res)=>{
     res.send("hello world")
