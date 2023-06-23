@@ -1,10 +1,52 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [value, setValue] = useState("")
+  const [result, setResult] = useState(null)
+  const [previoschats, setPreviosChat] = useState([])
+  const [currentTitle, setCurrentTitle] = useState([])
+
+  const getMessages = async ()=>{
+    try {
+      const response = await fetch(`http://localhost:7200/completions`, {
+        method: "POST",
+        body: JSON.stringify({
+          message: value
+        }),
+        headers:{
+          "Content-Type": "application/json"
+        }
+      })
+      const data = await response.json();
+      console.log(data.choices[0].message.content);
+      setResult(data.choices[0].message)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    // console.log(currentTitle, value, result)
+    if(!currentTitle[0] && value && result){
+      setCurrentTitle(value)
+    }
+    if(currentTitle[0] && value && result){
+      setPreviosChat(prevchats=>(
+        [...prevchats, {
+          title: currentTitle,
+          role: "user",
+          content: value
+        },{
+          title: currentTitle,
+          role: result.role,
+          content: result.content
+        }]
+      ))
+    }
+  }, [result, currentTitle])
 
   return (
 
@@ -19,14 +61,16 @@ function App() {
         </nav>
       </section>
       <section className='main'>
-        <h1>Interview GPT</h1>
+        {!currentTitle && <h1>Interview GPT</h1>}
         <ul className='feed'>
 
         </ul>
         <div className='bottom-section'>
           <div className='input-container'>
-            <input type="text" />
-            <div id='submit'>send</div>
+            <textarea type="text" value={value} style={{color:'black', width:'500px', maxHeight:'100px'}} onChange={(e)=>{
+              setValue(e.target.value)
+            }} />
+            <button id='submit' onClick={getMessages}>send</button>
           </div>
           <p className='info'>
             ChatGPT is a language model developed by OpenAI. It is based on the GPT (Generative Pre-trained Transformer) architecture, specifically GPT-3.5. It is designed to generate human-like text responses given a prompt or a conversation.
@@ -34,7 +78,6 @@ function App() {
         </div>
       </section>
     </div>
-
   )
 }
 
