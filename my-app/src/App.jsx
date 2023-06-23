@@ -7,7 +7,19 @@ function App() {
   const [value, setValue] = useState("")
   const [result, setResult] = useState(null)
   const [previoschats, setPreviosChat] = useState([])
-  const [currentTitle, setCurrentTitle] = useState([])
+  const [currentTitle, setCurrentTitle] = useState(null)
+
+  const createNewChat = ()=>{
+    setResult(null)
+    setValue("")
+    setCurrentTitle(null)
+  }
+
+  const handleClick = (el)=>{
+    setCurrentTitle(el)
+    setResult(null)
+    setValue("")
+  }
 
   const getMessages = async ()=>{
     try {
@@ -21,8 +33,9 @@ function App() {
         }
       })
       const data = await response.json();
-      console.log(data.choices[0].message.content);
+      // console.log(data.choices[0].message.content);
       setResult(data.choices[0].message)
+      // setValue("")
     } catch (error) {
       console.log(error)
     }
@@ -30,10 +43,10 @@ function App() {
 
   useEffect(()=>{
     // console.log(currentTitle, value, result)
-    if(!currentTitle[0] && value && result){
+    if(!currentTitle && value && result){
       setCurrentTitle(value)
     }
-    if(currentTitle[0] && value && result){
+    if(currentTitle && value && result){
       setPreviosChat(prevchats=>(
         [...prevchats, {
           title: currentTitle,
@@ -48,13 +61,20 @@ function App() {
     }
   }, [result, currentTitle])
 
-  return (
+  // console.log(previoschats)
 
+  const currentChat = previoschats.filter(el=>el.title==currentTitle)
+  const uniqueTitles = Array.from(new Set(previoschats.map(el=>el.title)))
+  // console.log(uniqueTitles)
+
+  return (
     <div className='app'>
       <section className='side-bar'>
-        <button>+ New Chat</button>
+        <button onClick={createNewChat}>+ New Chat</button>
         <ul className='history'>
-          <li>BLUGH</li>
+          {
+            uniqueTitles?.map((el,idx)=><li key={idx} onClick={()=>handleClick(el)}>{el}</li>)
+          }
         </ul>
         <nav>
           <p>Made by group</p>
@@ -63,11 +83,14 @@ function App() {
       <section className='main'>
         {!currentTitle && <h1>Interview GPT</h1>}
         <ul className='feed'>
-
+          {currentChat?.map((el, idx)=><li key={idx}>
+            <p className='role'>{el.role}</p>
+            <p>{el.content}</p>
+          </li>)}
         </ul>
         <div className='bottom-section'>
           <div className='input-container'>
-            <textarea type="text" value={value} style={{color:'black', width:'500px', maxHeight:'100px'}} onChange={(e)=>{
+            <textarea type="text" value={value}  onChange={(e)=>{
               setValue(e.target.value)
             }} />
             <button id='submit' onClick={getMessages}>send</button>
