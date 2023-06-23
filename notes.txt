@@ -1,0 +1,24 @@
+user {
+    name: ,
+    email,
+    pass
+}
+
+interview question {
+    question: [],
+    answerr: [],
+    users: 
+    interview type, questions asked, user's responses, and any generated feedback.
+}
+
+progress tracking {
+    previos score,
+    current score,
+    no, of interview :,
+    avg feedback score:,
+    date :,
+}
+
+Questions:
+npm GPT3 encoder
+
