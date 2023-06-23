@@ -1,11 +1,13 @@
 const express = require("express");
 const {connection} = require("./db");
+const cors=require("cors");
 const { userRouter } = require("./routes/user.route");
 const cookieParser = require("cookie-parser");
-const { questionRouter } = require("./routes/question.route");
+// const { questionRouter } = require("./routes/question.route");
 require("dotenv").config();
 
 const app = express();
+app.use(cors());
 
 app.get("/", (req, res)=>{
     res.send("hello world")
@@ -14,7 +16,7 @@ app.get("/", (req, res)=>{
 app.use(express.json());
 app.use(cookieParser())
 app.use("/users", userRouter)
-app.use("/question", questionRouter)
+// app.use("/question", questionRouter)
 
 app.post("/completion",async (req, res)=>{
     const options = {
