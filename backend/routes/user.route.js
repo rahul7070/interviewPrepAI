@@ -3,20 +3,16 @@ const { UserModel } = require("../model/user.model");
 const userRouter = express.Router()
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
-
-
-
+const BlackModel = require("../model/blacklist.model");
 
 userRouter.post("/register", async (req, res) => {
     const { name, email, password } = req.body
-
+    console.log(req.body)
     try {
         isUserPresent = await UserModel.findOne({ email })
-        if (isUserPresent) 
-        {
+        if (isUserPresent) {
             return res.send({ "msg": "Login Directly" })
         }
-
         bcrypt.hash(password, 7, async (err, hash) => {
             const user = new UserModel({ name, email, password: hash })
             await user.save()
@@ -24,30 +20,21 @@ userRouter.post("/register", async (req, res) => {
         });
     } catch (error) {
         res.status(401).send({ "msg": "Some error occourd while  Registration" })
-
     }
-
 })
 
 
 userRouter.post("/login", async (req, res) => {
     const { email, password } = req.body
-
     try {
         const user = await UserModel.findOne({ email })
         if (user) 
         {
-            bcrypt.compare(password, user.password, function (err, result) 
-            {
-                if (result) 
-                {
+            bcrypt.compare(password, user.password, function (err, result) {
+                if (result) {
                     let accesstoken = jwt.sign({ "userID": user._id }, 'accesstoken', { expiresIn: "7d" });
-
-
                     res.status(201).send({ "msg": "login success", "token": accesstoken, "user":user })
-
-                } else 
-                {
+                } else {
                     res.status(401).send({ "msg": "wrong input,login failed ,User already exist, please login" })
                 }
             });
@@ -62,7 +49,6 @@ userRouter.post("/login", async (req, res) => {
     }
 })
 
-
 userRouter.post("/logout", async (req, res) => {
     try {
         const foundToken = req.headers?.authorization
@@ -73,7 +59,6 @@ userRouter.post("/logout", async (req, res) => {
         res.status(401).send({ "msg": error.message })
     }
 })
-
 
 userRouter.get("/blacklist", async (req, res) => {
     try {
@@ -89,9 +74,5 @@ userRouter.get("/blacklist", async (req, res) => {
 
     }
 })
-
-
-
-
 
 module.exports = {userRouter}

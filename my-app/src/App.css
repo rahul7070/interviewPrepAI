@@ -51,6 +51,7 @@ nav{
   padding: 10px;
   margin: 10px;
   height: 100%;
+  overflow-y: scroll;
 }
 .history li{
   list-style-type: none;
@@ -65,12 +66,14 @@ nav{
    align-items: center;
 }
 .input-container{
+  display: flex;
   position: relative;
   width:100%;
   max-width: 650px;
 }
 
 textarea{
+  /* display: inline; */
   width:100%;
   border: none;
   font-size: 15px;
@@ -90,21 +93,22 @@ textarea:focus{
 }
 
 #submit{
-  position: absolute;
-  bottom: 15px;
+  display: inline;
+  /* position: absolute; */
+  /* bottom: 15px;
   right:0;
   width: 50px;
-  height: 30px;
-  background: none;
-  padding: 5px;
-  cursor: pointer;
+  height: 30px; */
+  /* background: none; */
+  /* padding: 5px; */
+  /* cursor: pointer;
   font-style: normal;
   font-size: 18px;
-  color: white;
+  color: black; */
 }
 
 .feed{
-  overflow: scroll;
+  overflow-y: scroll;
   width: 80%;
   padding: 0;
 }
@@ -124,3 +128,6 @@ textarea:focus{
 .feed p.role{
   min-width: 100px;
 }
+
+
+

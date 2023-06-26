@@ -1,0 +1,98 @@
+
+body{
+    background-image: url("https://www.aivancity.ai/sites/default/files/2023-04/ChatGPT-4%20d%E2%80%99OpenAI.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.loginContainer{
+    background-color: rgba(15, 15, 15, 0.5);
+    backdrop-filter: blur(10px); 
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 100px;
+}
+.loginContainer label{
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.loginContainer input {
+    display: block;
+    margin: 10px;
+    padding: 5px;
+    width: 300px;
+    border-radius: 5px;
+    background: transparent;
+    color: black;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.loginContainer input[type=submit]{
+    width: 100px;
+    margin: auto;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight:200;
+    font-size: large;
+}
+#credentialSubmit:hover{
+  cursor: pointer;
+  background-color: green;
+}
+.formContainer{
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#formBtn{
+    color:  black;
+    font-weight: bold;
+    font-size: large;
+    background-color: white;
+}
+#formBtn:hover{
+    background-color: black;
+    color: white;
+    border: black;
+}
+
+.successPopup, .loginFailPopup {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #141313;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(202, 179, 179, 0.1);
+    z-index: 9999;
+  }
+  
+  .successPopup p , .loginFailPopup p {
+    margin: 0;
+    margin-top: 3px;
+    text-align: center;
+  }
+  .tick, .cross {
+    margin-right: 5px; /* Adjust the spacing between the tick and the text */
+    font-size: 18px; /* Adjust the size of the tick mark */
+    color: green; /* Adjust the color of the tick mark */
+  }
+
+#name{
+  color:  black;
+}
+#email{
+  color:  black;
+}
+#password{
+  color:  black;
+}
+
+.heading{
+    color: rgb(3, 11, 19);
+    text-align: center;
+    font-size: 30px;
+}
